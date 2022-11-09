@@ -30,7 +30,20 @@ async function run() {
         });
 
         // review 
-        app.post('/reviews', async (req, res) => {
+        app.get('/services/:id/reviews', async (req, res) => {
+            console.log(req.query);
+            let query = {};
+            if (req.query.email) {
+                query = {
+                    email: req.query.email
+                }
+            }
+            const cursor = reviewCollection.find(query);
+
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        })
+        app.post('/services/:id/reviews', async (req, res) => {
             const review = req.body;
             const result = await reviewCollection.insertOne(review);
             res.send(result);
