@@ -82,6 +82,7 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await reviewCollection.deleteOne(query);
+            console.log(query);
             res.send(result);
         })
     }
